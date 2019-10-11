@@ -18,10 +18,10 @@ for (let i = 0; i < 4; i++){
            suit: suits[i],
            isFlipped: false,
            flipCard: function(){
-               if (isFlipped === false){
-                   isFlipped = true;
+               if (this.isFlipped === false){
+                   this.isFlipped = true;
                } else{
-                   isFlipped = false;
+                   this.isFlipped = false;
                }
            }
        })
@@ -47,33 +47,32 @@ function dealCards(){
     players[1].cardsInHand = cards.slice(cards.length/2, cards.length);
 }
 function playCards(){
-    if(players[0].cardsInHand.length === 0){
-        console.log('Player 2 wins!')
-    } else if (players[1].cardsInHand.length === 0){
-        console.log('Player 1 wins!')
-    } else
     players[0].placeCard();
     players[1].placeCard();
 }
 function compareCards(card1, card2){
-    if (card1.value === card2.value){
+    if (card1 === card2){
         console.log("It's WAR!")
         flipTopCards();
         war();
-    } else if (card1.value > card2.value){
+    } else if (card1 > card2){
         flipTopCards();
         players[0].cardsInHand = [...players[0].cardsInPlay,...players[0].cardsInHand]
         players[0].cardsInHand = [...players[1].cardsInPlay,...players[0].cardsInHand]
+        players[0].cardsInPlay = [];
+        players[1].cardsInPlay = [];
     } else {
         flipTopCards();
         players[1].cardsInHand = [...players[1].cardsInPlay,...players[1].cardsInHand]
         players[1].cardsInHand = [...players[0].cardsInPlay,...players[1].cardsInHand]
+        players[0].cardsInPlay = [];
+        players[1].cardsInPlay = [];
     }
 }
 function flipTopCards(){
-    flipped1 = players[0].cardsInPlay[cardsInPlay.length-1];
+    flipped1 = players[0].cardsInPlay[players[0].cardsInPlay.length-1];
     flipped1.flipCard();
-    flipped2 = players[1].cardsInPlay[cardsInPlay.length-1];
+    flipped2 = players[1].cardsInPlay[players[1].cardsInPlay.length-1];
     flipped2.flipCard();
 
 }
@@ -82,14 +81,22 @@ function war(){
     playCards();
     playCards();
     flipTopCards();
-    compareCards(flipped1,flipped2);
+    compareCards(flipped1.value,flipped2.value);
 }
 function startRound(){
     playCards();
     flipTopCards();
-    compareCards();
+    compareCards(flipped1.value,flipped2.value);
 }
 shuffleCards();
 dealCards();
+while(players[0].cardsInHand.length !== 0 || players[1].cardsInHand.length !==0){
+    startRound();
+}
+if(players[0].cardsInHand.length === 0){
+    console.log('Player 2 wins!')
+} else if (players[1].cardsInHand.length === 0){
+    console.log('Player 1 wins!')
+}
 
 console.log(players[0])
