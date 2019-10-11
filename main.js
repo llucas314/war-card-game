@@ -47,8 +47,11 @@ function dealCards(){
     players[1].cardsInHand = cards.slice(cards.length/2, cards.length);
 }
 function playCards(){
-    players[0].placeCard();
-    players[1].placeCard();
+    if (checkForWinner()){
+        players[0].placeCard();
+        players[1].placeCard();
+        return true;
+    } else return false;
 }
 function compareCards(card1, card2){
     if (card1 === card2){
@@ -77,9 +80,11 @@ function flipTopCards(){
 
 }
 function war(){
-    playCards();
-    playCards();
-    playCards();
+    for (let i = 0; i < 3; i++){
+        if (!playCards()){
+        break;
+        }
+    }
     flipTopCards();
     compareCards(flipped1.value,flipped2.value);
 }
@@ -88,15 +93,20 @@ function startRound(){
     flipTopCards();
     compareCards(flipped1.value,flipped2.value);
 }
+function checkForWinner(){
+    if(players[0].cardsInHand.length === 0){
+        console.log('Player 2 wins!');
+        return false;
+    } else if (players[1].cardsInHand.length === 0){
+        console.log('Player 1 wins!');
+        return false;
+    } else return true;
+}
 shuffleCards();
 dealCards();
-while(players[0].cardsInHand.length !== 0 || players[1].cardsInHand.length !==0){
+while(checkForWinner()){
     startRound();
 }
-if(players[0].cardsInHand.length === 0){
-    console.log('Player 2 wins!')
-} else if (players[1].cardsInHand.length === 0){
-    console.log('Player 1 wins!')
-}
 
-console.log(players[0])
+console.log(players[0].cardsInHand)
+console.log(players[1].cardsInHand)
