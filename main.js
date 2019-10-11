@@ -47,6 +47,12 @@ function dealCards(){
     players[1].cardsInHand = cards.slice(cards.length/2, cards.length);
 }
 function playCards(){
+    if(players[0].cardsInHand.length === 0){
+        console.log('Player 2 wins!')
+    }
+    if (players[1].cardsInHand.length === 0){
+        console.log('Player 1 wins!')
+    }
     players[0].placeCard();
     players[1].placeCard();
     flipTopCards();
