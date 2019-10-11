@@ -33,7 +33,7 @@ for (let i = 0; i < 2; i++){
     players.push({
         player: (i+1),
         cardsInPlay: [],
-        playCards: function(){
+        playCard: function(){
            this.cardsInPlay.push(this.cardsInHand.pop());
         }
     })
@@ -44,6 +44,9 @@ function shuffleCards(){
 function dealCards(){
     players[0].cardsInHand = cards.slice(0, cards.length/2);
     players[1].cardsInHand = cards.slice(cards.length/2, cards.length);
+}
+function startRound(){
+    players[0].pla
 }
 shuffleCards();
 dealCards();
