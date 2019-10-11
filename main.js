@@ -36,4 +36,7 @@ for (let i = 0; i < 2; i++){
         cardsInPlay: []
     })
 }
-console.log(cards.length)
+function shuffleCards(){
+    cards.sort((a, b) => 0.5 - Math.random())
+}
+console.log(cards)
