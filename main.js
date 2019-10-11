@@ -32,11 +32,14 @@ const players = [];
 for (let i = 0; i < 2; i++){
     players.push({
         player: (i+1),
-        cardsInHand: [],
         cardsInPlay: []
     })
 }
 function shuffleCards(){
     cards.sort((a, b) => 0.5 - Math.random())
 }
-console.log(cards)
+function dealCards(){
+    players[0].cardsInHand = cards.slice(0, cards.length/2);
+    players[1].cardsInHand = cards.slice(cards.length/2, cards.length);
+}
+console.log(players[0])
