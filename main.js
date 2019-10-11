@@ -27,4 +27,13 @@ for (let i = 0; i < 4; i++){
     }
 }
 
-console.log(cards)
+const players = [];
+// initialize player profiles
+for (let i = 0; i < 2; i++){
+    players.push({
+        player: (i+1),
+        cardsInHand: [],
+        cardsInPlay: []
+    })
+}
+console.log(cards.length)
