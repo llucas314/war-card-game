@@ -32,7 +32,10 @@ const players = [];
 for (let i = 0; i < 2; i++){
     players.push({
         player: (i+1),
-        cardsInPlay: []
+        cardsInPlay: [],
+        playCards: function(){
+           this.cardsInPlay.push(this.cardsInHand.pop());
+        }
     })
 }
 function shuffleCards(){
@@ -42,4 +45,7 @@ function dealCards(){
     players[0].cardsInHand = cards.slice(0, cards.length/2);
     players[1].cardsInHand = cards.slice(cards.length/2, cards.length);
 }
+shuffleCards();
+dealCards();
+players[0].playCards();
 console.log(players[0])
