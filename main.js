@@ -1,16 +1,16 @@
 let cards = [];
-const ranks = ['1','2','3','4','5','6','7','8','9','10','Jack','Queen','King','Ace'];
+const ranks = ['2','3','4','5','6','7','8','9','10','Jack','Queen','King','Ace'];
 let values = [];
 const suits = ['Spades','Clubs','Diamonds','Hearts'];
 
 // initialize values array
-for (let i = 0; i < 14; i++){
-    values[i] = i + 1;
+for (let i = 0; i < 13; i++){
+    values[i] = i + 2;
 }
 
 // initialize cards array with card objects
 for (let i = 0; i < 4; i++){
-    for (let j = 0; j < 14; j++){
+    for (let j = 0; j < 13; j++){
        cards.push({
            rank: ranks[j],
            value: values[j],
@@ -26,4 +26,5 @@ for (let i = 0; i < 4; i++){
        })
     }
 }
+
 console.log(cards)
