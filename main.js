@@ -49,22 +49,23 @@ function dealCards(){
 function playCards(){
     if(players[0].cardsInHand.length === 0){
         console.log('Player 2 wins!')
-    }
-    if (players[1].cardsInHand.length === 0){
+    } else if (players[1].cardsInHand.length === 0){
         console.log('Player 1 wins!')
-    }
+    } else
     players[0].placeCard();
     players[1].placeCard();
-    flipTopCards();
-    compareCards(flipped1,flipped2);
 }
 function compareCards(card1, card2){
     if (card1.value === card2.value){
+        console.log("It's WAR!")
+        flipTopCards();
         war();
     } else if (card1.value > card2.value){
+        flipTopCards();
         players[0].cardsInHand = [...players[0].cardsInPlay,...players[0].cardsInHand]
         players[0].cardsInHand = [...players[1].cardsInPlay,...players[0].cardsInHand]
     } else {
+        flipTopCards();
         players[1].cardsInHand = [...players[1].cardsInPlay,...players[1].cardsInHand]
         players[1].cardsInHand = [...players[0].cardsInPlay,...players[1].cardsInHand]
     }
@@ -83,6 +84,12 @@ function war(){
     flipTopCards();
     compareCards(flipped1,flipped2);
 }
+function startRound(){
+    playCards();
+    flipTopCards();
+    compareCards();
+}
 shuffleCards();
 dealCards();
+
 console.log(players[0])
