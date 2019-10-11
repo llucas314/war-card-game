@@ -3,6 +3,27 @@ const ranks = ['1','2','3','4','5','6','7','8','9','10','Jack','Queen','King','A
 let values = [];
 const suits = ['Spades','Clubs','Diamonds','Hearts'];
 
-for (let i = 0; i < 15; i++){
-    values[i] = i;
+// initialize values array
+for (let i = 0; i < 14; i++){
+    values[i] = i + 1;
 }
+
+// initialize cards array with card objects
+for (let i = 0; i < 4; i++){
+    for (let j = 0; j < 14; j++){
+       cards.push({
+           rank: ranks[j],
+           value: values[j],
+           suit: suits[i],
+           isFlipped: false,
+           flipCard: function(){
+               if (isFlipped === false){
+                   isFlipped = true;
+               } else{
+                   isFlipped = false;
+               }
+           }
+       })
+    }
+}
+console.log(cards)
