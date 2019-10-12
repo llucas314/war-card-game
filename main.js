@@ -39,10 +39,10 @@ for (let i = 0; i < 2; i++){
         }
     })
 }
-function shuffleCards(){
-    cards.sort((a, b) => 0.5 - Math.random())
-    print('*****Shuffling cards*****')
-}
+// function shuffleCards(){
+//     cards.sort((a, b) => 0.5 - Math.random())
+//     print('*****Shuffling cards*****')
+// }
 function dealCards(){
     print('*****Dealing cards*****')
     players[0].cardsInHand = cards.slice(0, cards.length/2);
