@@ -24,11 +24,18 @@ class Card{
         this.suit = suit;
         this.rank = rank;
         this.value = value;
+        this.isFlipped = false;
     }
 }
 class Player{
     constructor(name){
         this.name = name;
         this.cardsInHand = [];
+    }
+}
+class Board{
+    constructor(){
+        this.players = [];
+        this.cardInPlay = [];
     }
 }
