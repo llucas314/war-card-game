@@ -32,6 +32,9 @@ class Player{
         this.name = name;
         this.cardsInHand = [];
     }
+    placeCard(board){
+        board.cardsInPlay.push(this.cardsInHand.pop())
+    }
 }
 class Board{
     constructor(){
@@ -57,6 +60,7 @@ class Board{
         }
         this.dealCards(deck);
     }
+    
 }
 let board = new Board;
 board.init();
