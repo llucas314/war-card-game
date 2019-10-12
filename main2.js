@@ -37,14 +37,14 @@ class Player{
 class Board{
     constructor(){
         this.players = [];
-        this.cardInPlay = [];
+        this.cardsInPlay = [];
     }
-    dealCards(deck){
+    dealCards(deckOnBoard){
         let numOfPlayers = this.players.length;
         console.log('*****Dealing cards*****')
-        this.players[0].cardsInHand = deck.cards.slice(0, deck.cards.length/numOfPlayers);
+        this.players[0].cardsInHand = deckOnBoard.cards.slice(0, deckOnBoard.cards.length/numOfPlayers);
         console.log(`Player ${this.players[0].name} has been dealt ${this.players[0].cardsInHand.length} cards.`)
-        this.players[1].cardsInHand = deck.cards.slice(deck.cards.length/numOfPlayers, deck.cards.length);
+        this.players[1].cardsInHand = deckOnBoard.cards.slice(deckOnBoard.cards.length/numOfPlayers, deckOnBoard.cards.length);
         console.log(`Player ${this.players[1].name} has been dealt ${this.players[1].cardsInHand.length} cards.`)
     }
     init(){
@@ -61,8 +61,31 @@ class Board{
     startRound(){
         let playerOneCard = this.players[0].placeCard();
         let playerTwoCard = this.players[1].placeCard()
-        this.cardInPlay.push(playerOneCard)
-        this.cardInPlay.push(playerTwoCard)
+        this.cardsInPlay.push(playerOneCard)
+        this.cardsInPlay.push(playerTwoCard)
+        this.compareCards(playerOneCard, playerTwoCard);
+    }
+    compareCards(card1, card2){
+        if (card1.value === card2.value){
+            console.log("It's WAR!")
+            this.flipTopCards();
+            // war();
+        } else if (card1.value > card2.value){
+            this.flipTopCards();
+            this.players[0].cardsInHand = [...this.cardsInPlay,...this.players[0].cardsInHand]
+            this.cardsInPlay = [];
+        } else {
+            this.flipTopCards();
+            this.players[1].cardsInHand = [...this.cardsInPlay,...this.players[1].cardsInHand]
+            this.cardsInPlay = [];
+        }
+    }
+    flipTopCards(){
+        let cip = this.cardsInPlay;
+        cip[cip.length-1].isFlipped = true;
+        cip[cip.length-2].isFlipped = true;
+        console.log(`${this.players[0].name} flipped up a ${cip[cip.length-1].rank} of ${cip[cip.length-1].suit}`)
+        console.log(`${this.players[1].name} flipped up a ${cip[cip.length-2].rank} of ${cip[cip.length-2].suit}`)
     }
 }
 let board = new Board;
