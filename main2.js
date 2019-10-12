@@ -107,6 +107,13 @@ class Board{
         console.log('"War!!!"');
         this.compareCards();  
     }
+    checkForWinner(){
+        if (this.players[0].cardsInHand.length === 0){
+            console.log(`***** Game over. ${this.players[0]} is out of cards. ${this.player[1]} won! *****`)
+        } else if (this.players[1].length === 0){
+            console.log(`***** Game over. ${this.players[1]} is out of cards. ${this.player[0]} won! *****`)
+        }
+    }
 }
 let board = new Board;
 board.init();
