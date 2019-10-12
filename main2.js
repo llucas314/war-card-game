@@ -38,4 +38,25 @@ class Board{
         this.players = [];
         this.cardInPlay = [];
     }
+    dealCards(deck){
+        let numOfPlayers = this.players.length;
+        console.log('*****Dealing cards*****')
+        this.players[0].cardsInHand = deck.cards.slice(0, deck.cards.length/numOfPlayers);
+        console.log(`Player ${this.players[0].name} has been dealt ${this.players[0].cardsInHand.length} cards.`)
+        this.players[1].cardsInHand = deck.cards.slice(deck.cards.length/numOfPlayers, deck.cards.length);
+        console.log(`Player ${this.players[1].name} has been dealt ${this.players[1].cardsInHand.length} cards.`)
+    }
+    init(){
+        let deck = new Deck;
+        let player;
+        deck.init();
+        deck.shuffle();
+        for (let i = 0; i < 2; i++){
+            player = new Player(`Player ${i + 1}`);
+            this.players.push(player);
+        }
+        this.dealCards(deck);
+    }
 }
+let board = new Board;
+board.init();
