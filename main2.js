@@ -59,18 +59,19 @@ class Board{
         this.dealCards(deck);
     }
     startRound(){
-        let playerOneCard = this.players[0].placeCard();
-        let playerTwoCard = this.players[1].placeCard()
-        this.cardsInPlay.push(playerOneCard)
-        this.cardsInPlay.push(playerTwoCard)
-        this.compareCards(playerOneCard, playerTwoCard);
+        console.log('***** Round One ******')
+        this.playCards();
+        
+        this.compareCards();
     }
     compareCards(card1, card2){
-        if (card1.value === card2.value){
-            console.log("It's WAR!")
+        let playerOneCard = this.cardsInPlay[this.cardsInPlay.length-2].value;
+        let playerTwoCard = this.cardsInPlay[this.cardsInPlay.length-1].value;
+        if (playerOneCard === playerTwoCard){
             this.flipTopCards();
-            // war();
-        } else if (card1.value > card2.value){
+            console.log("It's a tie!")
+            this.war();
+        } else if (playerOneCard > playerTwoCard){
             this.flipTopCards();
             this.players[0].cardsInHand = [...this.cardsInPlay,...this.players[0].cardsInHand]
             this.cardsInPlay = [];
@@ -84,8 +85,26 @@ class Board{
         let cip = this.cardsInPlay;
         cip[cip.length-1].isFlipped = true;
         cip[cip.length-2].isFlipped = true;
-        console.log(`${this.players[0].name} flipped up a ${cip[cip.length-1].rank} of ${cip[cip.length-1].suit}`)
-        console.log(`${this.players[1].name} flipped up a ${cip[cip.length-2].rank} of ${cip[cip.length-2].suit}`)
+        console.log(`${this.players[0].name} flipped up a ${cip[cip.length-2].rank} of ${cip[cip.length-2].suit}`)
+        console.log(`${this.players[1].name} flipped up a ${cip[cip.length-1].rank} of ${cip[cip.length-1].suit}`)
+    }
+    playCards(){
+        let playerOneCard = this.players[0].placeCard();
+        let playerTwoCard = this.players[1].placeCard();
+        this.cardsInPlay.push(playerOneCard);
+        this.cardsInPlay.push(playerTwoCard);
+    }
+    war(){
+        this.playCards();
+        console.log('"I..."');
+        this.playCards();
+        console.log('"De-..."');
+        this.playCards();
+        console.log('"-clare..."');
+        this.playCards();
+        console.log('"War!!!"');
+        this.flipTopCards();
+        this.compareCards();
     }
 }
 let board = new Board;
