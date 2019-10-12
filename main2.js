@@ -26,3 +26,9 @@ class Card{
         this.value = value;
     }
 }
+class Player{
+    constructor(name){
+        this.name = name;
+        this.cardsInHand = [];
+    }
+}
