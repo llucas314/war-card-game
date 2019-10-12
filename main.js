@@ -28,29 +28,29 @@ let flipped2 = null;
 //     }
 // }
 
-const players = [];
-// initialize player profiles
-for (let i = 0; i < 2; i++){
-    players.push({
-        player: (i+1),
-        cardsInPlay: [],
-        placeCard: function(){
-           this.cardsInPlay.push(this.cardsInHand.pop());
-        }
-    })
-}
+// const players = [];
+// // initialize player profiles
+// for (let i = 0; i < 2; i++){
+//     players.push({
+//         player: (i+1),
+//         cardsInPlay: [],
+//         placeCard: function(){
+//            this.cardsInPlay.push(this.cardsInHand.pop());
+//         }
+//     })
+// }
 // function shuffleCards(){
 //     cards.sort((a, b) => 0.5 - Math.random())
 //     print('*****Shuffling cards*****')
 // }
-function dealCards(){
-    print('*****Dealing cards*****')
-    players[0].cardsInHand = cards.slice(0, cards.length/2);
-    print(`Player ${players[0].player} has been dealt ${players[0].cardsInHand.length} cards.`)
-    players[1].cardsInHand = cards.slice(cards.length/2, cards.length);
-    print(`Player ${players[1].player} has been dealt ${players[1].cardsInHand.length} cards.`)
+// function dealCards(){
+//     print('*****Dealing cards*****')
+//     players[0].cardsInHand = cards.slice(0, cards.length/2);
+//     print(`Player ${players[0].player} has been dealt ${players[0].cardsInHand.length} cards.`)
+//     players[1].cardsInHand = cards.slice(cards.length/2, cards.length);
+//     print(`Player ${players[1].player} has been dealt ${players[1].cardsInHand.length} cards.`)
 
-}
+// }
 function playCards(){
     if (checkForWinner()){
         players[0].placeCard();
@@ -103,13 +103,13 @@ function checkForWinner(){
         console.log('Player 1 wins!');
     } else return true;
 }
-print = message => console.log(message);
+// print = message => console.log(message);
 
-shuffleCards();
-dealCards();
-while(checkForWinner()){
-    startRound();
-}
+// shuffleCards();
+// dealCards();
+// while(checkForWinner()){
+//     startRound();
+// }
 
-console.log(players[0].cardsInHand)
-console.log(players[1].cardsInHand)
+// console.log(players[0].cardsInHand)
+// console.log(players[1].cardsInHand)

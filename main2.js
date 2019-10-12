@@ -32,9 +32,7 @@ class Player{
         this.name = name;
         this.cardsInHand = [];
     }
-    placeCard(board){
-        board.cardsInPlay.push(this.cardsInHand.pop())
-    }
+    placeCard = () => this.cardsInHand.pop()
 }
 class Board{
     constructor(){
@@ -60,7 +58,13 @@ class Board{
         }
         this.dealCards(deck);
     }
-    
+    startRound(){
+        let playerOneCard = this.players[0].placeCard();
+        let playerTwoCard = this.players[1].placeCard()
+        this.cardInPlay.push(playerOneCard)
+        this.cardInPlay.push(playerTwoCard)
+    }
 }
 let board = new Board;
 board.init();
+board.startRound();
