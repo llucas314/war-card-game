@@ -41,10 +41,15 @@ for (let i = 0; i < 2; i++){
 }
 function shuffleCards(){
     cards.sort((a, b) => 0.5 - Math.random())
+    print('*****Shuffling cards*****')
 }
 function dealCards(){
+    print('*****Dealing cards*****')
     players[0].cardsInHand = cards.slice(0, cards.length/2);
+    print(`Player ${players[0].player} has been dealt ${players[0].cardsInHand.length} cards.`)
     players[1].cardsInHand = cards.slice(cards.length/2, cards.length);
+    print(`Player ${players[1].player} has been dealt ${players[1].cardsInHand.length} cards.`)
+
 }
 function playCards(){
     if (checkForWinner()){
@@ -81,9 +86,7 @@ function flipTopCards(){
 }
 function war(){
     for (let i = 0; i < 3; i++){
-        if (!playCards()){
-        break;
-        }
+        playCards()
     }
     flipTopCards();
     compareCards(flipped1.value,flipped2.value);
@@ -95,13 +98,13 @@ function startRound(){
 }
 function checkForWinner(){
     if(players[0].cardsInHand.length === 0){
-        console.log('Player 2 wins!');
-        return false;
+        console.log('Player 2 wins!');  
     } else if (players[1].cardsInHand.length === 0){
         console.log('Player 1 wins!');
-        return false;
     } else return true;
 }
+print = message => console.log(message);
+
 shuffleCards();
 dealCards();
 while(checkForWinner()){
