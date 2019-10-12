@@ -61,7 +61,7 @@ class Board{
     startRound(){
         console.log('***** Round One ******')
         this.playCards();
-        
+        console.log('***** Players draw a card *****')
         this.compareCards();
     }
     compareCards(card1, card2){
@@ -75,10 +75,12 @@ class Board{
             this.flipTopCards();
             this.players[0].cardsInHand = [...this.cardsInPlay,...this.players[0].cardsInHand]
             this.cardsInPlay = [];
+            console.log(`***** ${this.players[0].name} wins the round! *****`)
         } else {
             this.flipTopCards();
             this.players[1].cardsInHand = [...this.cardsInPlay,...this.players[1].cardsInHand]
-            this.cardsInPlay = [];
+            this.cardsInPlay = []; 
+            console.log(`***** ${this.players[1].name} wins the round! *****`)
         }
     }
     flipTopCards(){
@@ -103,8 +105,7 @@ class Board{
         console.log('"-clare..."');
         this.playCards();
         console.log('"War!!!"');
-        this.flipTopCards();
-        this.compareCards();
+        this.compareCards();  
     }
 }
 let board = new Board;
