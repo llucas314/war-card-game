@@ -1,115 +1,182 @@
-// let cards = [];
-// const ranks = ['2','3','4','5','6','7','8','9','10','Jack','Queen','King','Ace'];
-// let values = [];
-// const suits = ['Spades','Clubs','Diamonds','Hearts'];
-let flipped1 = null;
-let flipped2 = null;
-// // initialize values array
-// for (let i = 0; i < 13; i++){
-//     values[i] = i + 2;
-// }
-
-// // initialize cards array with card objects
-// for (let i = 0; i < 4; i++){
-//     for (let j = 0; j < 13; j++){
-//        cards.push({
-//            rank: ranks[j],
-//            value: values[j],
-//            suit: suits[i],
-//            isFlipped: false,
-//            flipCard: function(){
-//                if (this.isFlipped === false){
-//                    this.isFlipped = true;
-//                } else{
-//                    this.isFlipped = false;
-//                }
-//            }
-//        })
-//     }
-// }
-
-// const players = [];
-// // initialize player profiles
-// for (let i = 0; i < 2; i++){
-//     players.push({
-//         player: (i+1),
-//         cardsInPlay: [],
-//         placeCard: function(){
-//            this.cardsInPlay.push(this.cardsInHand.pop());
-//         }
-//     })
-// }
-// function shuffleCards(){
-//     cards.sort((a, b) => 0.5 - Math.random())
-//     print('*****Shuffling cards*****')
-// }
-// function dealCards(){
-//     print('*****Dealing cards*****')
-//     players[0].cardsInHand = cards.slice(0, cards.length/2);
-//     print(`Player ${players[0].player} has been dealt ${players[0].cardsInHand.length} cards.`)
-//     players[1].cardsInHand = cards.slice(cards.length/2, cards.length);
-//     print(`Player ${players[1].player} has been dealt ${players[1].cardsInHand.length} cards.`)
-
-// }
-function playCards(){
-    if (checkForWinner()){
-        players[0].placeCard();
-        players[1].placeCard();
-        return true;
-    } else return false;
-}
-// function compareCards(card1, card2){
-//     if (card1 === card2){
-//         console.log("It's WAR!")
-//         flipTopCards();
-//         war();
-//     } else if (card1 > card2){
-//         flipTopCards();
-//         players[0].cardsInHand = [...players[0].cardsInPlay,...players[0].cardsInHand]
-//         players[0].cardsInHand = [...players[1].cardsInPlay,...players[0].cardsInHand]
-//         players[0].cardsInPlay = [];
-//         players[1].cardsInPlay = [];
-//     } else {
-//         flipTopCards();
-//         players[1].cardsInHand = [...players[1].cardsInPlay,...players[1].cardsInHand]
-//         players[1].cardsInHand = [...players[0].cardsInPlay,...players[1].cardsInHand]
-//         players[0].cardsInPlay = [];
-//         players[1].cardsInPlay = [];
-//     }
-// }
-// function flipTopCards(){
-//     flipped1 = players[0].cardsInPlay[players[0].cardsInPlay.length-1];
-//     flipped1.flipCard();
-//     flipped2 = players[1].cardsInPlay[players[1].cardsInPlay.length-1];
-//     flipped2.flipCard();
-
-// }
-function war(){
-    for (let i = 0; i < 3; i++){
-        playCards()
+class Deck{
+    suits = ['Spades','Clubs','Diamonds','Hearts'];
+    ranks = ['2','3','4','5','6','7','8','9','10','Jack','Queen','King','Ace'];
+    values = [2,3,4,5,6,7,8,9,10,11,12,13,14];
+    card;
+    constructor(){
+        this.cards = [];
     }
-    flipTopCards();
-    compareCards(flipped1.value,flipped2.value);
+    // adds each card to deck
+    init(){
+        for (let i = 0; i < this.suits.length; i++){
+            for(let j = 0; j < this.ranks.length; j++){
+                this.card = new Card(this.suits[i], this.ranks[j], this.values[j]);
+                this.cards.push(this.card);
+            }
+        }
+    }
+    shuffle(){
+        this.cards.sort((a, b) => 0.5 - Math.random())
+        console.log('*****Shuffling cards*****')
+    }
 }
-function startRound(){
-    playCards();
-    flipTopCards();
-    compareCards(flipped1.value,flipped2.value);
+class Card{
+    constructor(suit, rank, value){
+        this.suit = suit;
+        this.rank = rank;
+        this.value = value;
+        this.isFlipped = false;
+    }
 }
-function checkForWinner(){
-    if(players[0].cardsInHand.length === 0){
-        console.log('Player 2 wins!');  
-    } else if (players[1].cardsInHand.length === 0){
-        console.log('Player 1 wins!');
-    } else return true;
-}
-// print = message => console.log(message);
+class Player{
+    constructor(name){
+        this.name = name;
+        this.cardsInHand = [];
+    }
+    // removes a card out of players hand
+    placeCard = () => this.cardsInHand.pop();
 
-// shuffleCards();
-// dealCards();
-// while(checkForWinner()){
-//     startRound();
-// }
-
-// console.log(players[0].cardsInHand)
-// console.log(players[1].cardsInHand)
+    hasCardsLeft(){
+        if (this.cardsInHand.length !== 0){
+            return true;
+        } else return false;
+    }
+}
+class Board{
+    constructor(){
+        this.players = [];
+        this.cardsInPlay = [];
+        this.takenCards = [];
+    }
+    dealCards(deckOnBoard){
+        let numOfPlayers = this.players.length;
+        console.log('*****Dealing cards*****')
+        this.players[0].cardsInHand = deckOnBoard.cards.slice(0, deckOnBoard.cards.length/numOfPlayers);
+        console.log(`Player ${this.players[0].name} has been dealt ${this.players[0].cardsInHand.length} cards.`)
+        this.players[1].cardsInHand = deckOnBoard.cards.slice(deckOnBoard.cards.length/numOfPlayers, deckOnBoard.cards.length);
+        console.log(`Player ${this.players[1].name} has been dealt ${this.players[1].cardsInHand.length} cards.`)
+    }
+    // sets up and starts game
+    init(){
+        let deck = new Deck;
+        let player;
+        deck.init();
+        deck.shuffle();
+        for (let i = 0; i < 2; i++){
+            player = new Player(`Player ${i + 1}`);
+            this.players.push(player);
+        }
+        this.dealCards(deck);
+        let round = 1;
+        while(this.gameStillInProgress()){
+            this.startRound(round);
+            console.log(`***** At the end of round ${round}, ${this.players[0].name} has ${this.players[0].cardsInHand.length} cards and ${this.players[1].name} has ${this.players[1].cardsInHand.length} cards *****`)
+            round++;
+        }
+        // winning conditions
+        if (this.players[1].hasCardsLeft()){
+            console.log(`***** Game over. ${this.players[0].name} is out of cards. ${this.players[1].name} won! *****`);
+        } else if (this.players[0].hasCardsLeft()){
+            console.log(`***** Game over. ${this.players[1].name} is out of cards. ${this.players[0].name} won! *****`);
+        }
+    }
+    startRound(counter){
+        console.log(`***** Round ${counter} ******`)
+        if (this.playCards()){
+            console.log('***** Players draw a card *****')
+            this.compareCards();
+            return true;
+        } return false;
+    }
+    compareCards(){
+            let playerOneCard = this.cardsInPlay[this.cardsInPlay.length-2].value;
+            let playerTwoCard = this.cardsInPlay[this.cardsInPlay.length-1].value;
+            if (playerOneCard === playerTwoCard){
+                this.flipTopCards();
+                console.log("It's a tie!")
+                this.war();
+            } else if (playerOneCard > playerTwoCard){
+                this.flipTopCards();
+                this.takeCardsInPlay(this.players[0])
+            } else if(playerOneCard < playerTwoCard){
+                this.flipTopCards();
+                this.takeCardsInPlay(this.players[1])
+            }
+         }
+    
+    flipTopCards(){
+        let cip = this.cardsInPlay;
+        cip[cip.length-1].isFlipped = true;
+        cip[cip.length-2].isFlipped = true;
+        console.log(`${this.players[0].name} flipped up a ${cip[cip.length-2].rank} of ${cip[cip.length-2].suit}`)
+        console.log(`${this.players[1].name} flipped up a ${cip[cip.length-1].rank} of ${cip[cip.length-1].suit}`)
+    }
+    // pushes cards from players hands onto board and recognizes when a player runs out of cards during war conditions
+    playCards(){
+        if (this.players[0].hasCardsLeft() && this.players[1].hasCardsLeft()){
+            let playerOneCard = this.players[0].placeCard();
+            let playerTwoCard = this.players[1].placeCard();
+            this.cardsInPlay.push(playerOneCard);
+            this.cardsInPlay.push(playerTwoCard);
+            return true;
+        } else if (!this.players[0].hasCardsLeft()){
+            console.log(`***** ${this.players[0].name} does not have enough cards to finish war *****`);
+            this.takeCardsInPlay(this.players[1]);
+            return false;
+        } else{
+            console.log(`***** ${this.players[1].name} does not have enough cards to finish war *****`);
+            this.takeCardsInPlay(this.players[0]);
+            return false;
+        };
+    }
+    war(){
+        if (this.playCards()){
+            console.log('"I..."');
+            if(this.playCards()){
+                console.log('"De-..."');
+                if (this.playCards()){
+                    console.log('"-clare..."');
+                    if (this.playCards()){
+                        console.log('"War!!!"');
+                        this.compareCards(); 
+                    } else {
+                        return;
+                    }
+                } else {
+                    return;
+                }
+            } else{
+                return;
+            }
+        } else return;
+    }
+    // removes cards from board and places them into winner of that round's hand
+    takeCardsInPlay(handWinner){
+        this.cardsInPlay.sort((a, b) => 0.5 - Math.random());
+        this.cardsInPlay.forEach((element) => {
+            if (element.isFlipped === false){
+                this.takenCards.push(element);
+            } else {
+                element.isFlipped = false;
+            }
+        })
+        // reveals the cards that were not flipped
+        let revealCards = this.takenCards.map(element => {
+            return ` ${element.rank} of ${element.suit}`
+        })
+        if (revealCards.length > 0){
+            console.log(`***** ${handWinner.name} has taken the following unflipped cards during the war: ${revealCards} *****`);
+        }
+        handWinner.cardsInHand = [...this.cardsInPlay,...handWinner.cardsInHand];
+        this.cardsInPlay = [];
+        this.takenCards = [];
+        console.log(`***** ${handWinner.name} wins the round! *****`);
+    }
+    gameStillInProgress(){
+        if ((!this.players[0].hasCardsLeft() || !this.players[1].hasCardsLeft()) && this.cardsInPlay.length === 0){
+            return false;
+        } else return true;
+    }
+}
+let board = new Board;
+board.init();
