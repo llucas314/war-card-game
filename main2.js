@@ -146,6 +146,11 @@ class Board{
     takeCardsInPlay(handWinner){
         this.cardsInPlay.sort((a, b) => 0.5 - Math.random());
         handWinner.cardsInHand = [...this.cardsInPlay,...handWinner.cardsInHand];
+        this.cardsInPlay.forEach(function(element){
+            if (element.isFlipped === true){
+                element.isFlipped = false;
+            }
+        })
         this.cardsInPlay = [];
         console.log(`***** ${handWinner.name} wins the round! *****`);
     }
