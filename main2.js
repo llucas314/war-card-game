@@ -43,6 +43,7 @@ class Board{
     constructor(){
         this.players = [];
         this.cardsInPlay = [];
+        this.takenCards = [];
     }
     dealCards(deckOnBoard){
         let numOfPlayers = this.players.length;
@@ -145,13 +146,22 @@ class Board{
     }
     takeCardsInPlay(handWinner){
         this.cardsInPlay.sort((a, b) => 0.5 - Math.random());
-        handWinner.cardsInHand = [...this.cardsInPlay,...handWinner.cardsInHand];
-        this.cardsInPlay.forEach(function(element){
-            if (element.isFlipped === true){
+        this.cardsInPlay.forEach((element) => {
+            if (element.isFlipped === false){
+                this.takenCards.push(element);
+            } else {
                 element.isFlipped = false;
             }
         })
+        let revealCards = this.takenCards.map(element => {
+            return ` ${element.rank} of ${element.suit}`
+        })
+        if (revealCards.length > 0){
+            console.log(`***** ${handWinner.name} has taken the following unflipped cards: ${revealCards} *****`);
+        }
+        handWinner.cardsInHand = [...this.cardsInPlay,...handWinner.cardsInHand];
         this.cardsInPlay = [];
+        this.takenCards = [];
         console.log(`***** ${handWinner.name} wins the round! *****`);
     }
     gameStillInProgress(){
