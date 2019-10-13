@@ -6,6 +6,7 @@ class Deck{
     constructor(){
         this.cards = [];
     }
+    // adds each card to deck
     init(){
         for (let i = 0; i < this.suits.length; i++){
             for(let j = 0; j < this.ranks.length; j++){
@@ -32,7 +33,9 @@ class Player{
         this.name = name;
         this.cardsInHand = [];
     }
+    // removes a card out of players hand
     placeCard = () => this.cardsInHand.pop();
+
     hasCardsLeft(){
         if (this.cardsInHand.length !== 0){
             return true;
@@ -53,6 +56,7 @@ class Board{
         this.players[1].cardsInHand = deckOnBoard.cards.slice(deckOnBoard.cards.length/numOfPlayers, deckOnBoard.cards.length);
         console.log(`Player ${this.players[1].name} has been dealt ${this.players[1].cardsInHand.length} cards.`)
     }
+    // sets up and starts game
     init(){
         let deck = new Deck;
         let player;
@@ -69,6 +73,7 @@ class Board{
             console.log(`***** At the end of round ${round}, ${this.players[0].name} has ${this.players[0].cardsInHand.length} cards and ${this.players[1].name} has ${this.players[1].cardsInHand.length} cards *****`)
             round++;
         }
+        // winning conditions
         if (this.players[1].hasCardsLeft()){
             console.log(`***** Game over. ${this.players[0].name} is out of cards. ${this.players[1].name} won! *****`);
         } else if (this.players[0].hasCardsLeft()){
@@ -106,6 +111,7 @@ class Board{
         console.log(`${this.players[0].name} flipped up a ${cip[cip.length-2].rank} of ${cip[cip.length-2].suit}`)
         console.log(`${this.players[1].name} flipped up a ${cip[cip.length-1].rank} of ${cip[cip.length-1].suit}`)
     }
+    // pushes cards from players hands onto board and recognizes when a player runs out of cards during war conditions
     playCards(){
         if (this.players[0].hasCardsLeft() && this.players[1].hasCardsLeft()){
             let playerOneCard = this.players[0].placeCard();
@@ -144,6 +150,7 @@ class Board{
             }
         } else return;
     }
+    // removes cards from board and places them into winner of that round's hand
     takeCardsInPlay(handWinner){
         this.cardsInPlay.sort((a, b) => 0.5 - Math.random());
         this.cardsInPlay.forEach((element) => {
@@ -153,11 +160,12 @@ class Board{
                 element.isFlipped = false;
             }
         })
+        // reveals the cards that were not flipped
         let revealCards = this.takenCards.map(element => {
             return ` ${element.rank} of ${element.suit}`
         })
         if (revealCards.length > 0){
-            console.log(`***** ${handWinner.name} has taken the following unflipped cards: ${revealCards} *****`);
+            console.log(`***** ${handWinner.name} has taken the following unflipped cards during the war: ${revealCards} *****`);
         }
         handWinner.cardsInHand = [...this.cardsInPlay,...handWinner.cardsInHand];
         this.cardsInPlay = [];
