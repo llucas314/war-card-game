@@ -114,10 +114,10 @@ class Board{
             return true;
         } else if (!this.players[0].hasCardsLeft()){
             console.log(`***** ${this.players[0].name} does not have enough cards to finish war *****`);
-            this.takeCardsInPlay(this.players[1].name);
+            this.takeCardsInPlay(this.players[1]);
             return false;
         } else{
-            console.log(`***** ${this.players[1]} does not have enough cards to finish war *****`);
+            console.log(`***** ${this.players[1].name} does not have enough cards to finish war *****`);
             this.takeCardsInPlay(this.players[0]);
             return false;
         };
@@ -157,4 +157,3 @@ class Board{
 }
 let board = new Board;
 board.init();
-// if player x does not have a card to playl player y needs to pick them up. something in war.
