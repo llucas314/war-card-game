@@ -58,32 +58,32 @@ function playCards(){
         return true;
     } else return false;
 }
-function compareCards(card1, card2){
-    if (card1 === card2){
-        console.log("It's WAR!")
-        flipTopCards();
-        war();
-    } else if (card1 > card2){
-        flipTopCards();
-        players[0].cardsInHand = [...players[0].cardsInPlay,...players[0].cardsInHand]
-        players[0].cardsInHand = [...players[1].cardsInPlay,...players[0].cardsInHand]
-        players[0].cardsInPlay = [];
-        players[1].cardsInPlay = [];
-    } else {
-        flipTopCards();
-        players[1].cardsInHand = [...players[1].cardsInPlay,...players[1].cardsInHand]
-        players[1].cardsInHand = [...players[0].cardsInPlay,...players[1].cardsInHand]
-        players[0].cardsInPlay = [];
-        players[1].cardsInPlay = [];
-    }
-}
-function flipTopCards(){
-    flipped1 = players[0].cardsInPlay[players[0].cardsInPlay.length-1];
-    flipped1.flipCard();
-    flipped2 = players[1].cardsInPlay[players[1].cardsInPlay.length-1];
-    flipped2.flipCard();
+// function compareCards(card1, card2){
+//     if (card1 === card2){
+//         console.log("It's WAR!")
+//         flipTopCards();
+//         war();
+//     } else if (card1 > card2){
+//         flipTopCards();
+//         players[0].cardsInHand = [...players[0].cardsInPlay,...players[0].cardsInHand]
+//         players[0].cardsInHand = [...players[1].cardsInPlay,...players[0].cardsInHand]
+//         players[0].cardsInPlay = [];
+//         players[1].cardsInPlay = [];
+//     } else {
+//         flipTopCards();
+//         players[1].cardsInHand = [...players[1].cardsInPlay,...players[1].cardsInHand]
+//         players[1].cardsInHand = [...players[0].cardsInPlay,...players[1].cardsInHand]
+//         players[0].cardsInPlay = [];
+//         players[1].cardsInPlay = [];
+//     }
+// }
+// function flipTopCards(){
+//     flipped1 = players[0].cardsInPlay[players[0].cardsInPlay.length-1];
+//     flipped1.flipCard();
+//     flipped2 = players[1].cardsInPlay[players[1].cardsInPlay.length-1];
+//     flipped2.flipCard();
 
-}
+// }
 function war(){
     for (let i = 0; i < 3; i++){
         playCards()

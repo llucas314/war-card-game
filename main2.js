@@ -32,7 +32,12 @@ class Player{
         this.name = name;
         this.cardsInHand = [];
     }
-    placeCard = () => this.cardsInHand.pop()
+    placeCard = () => this.cardsInHand.pop();
+    hasCardsLeft(){
+        if (this.cardsInHand.length !== 0){
+            return true;
+        } else return false;
+    }
 }
 class Board{
     constructor(){
@@ -57,31 +62,48 @@ class Board{
             this.players.push(player);
         }
         this.dealCards(deck);
-    }
-    startRound(){
-        console.log('***** Round One ******')
-        this.playCards();
-        console.log('***** Players draw a card *****')
-        this.compareCards();
-    }
-    compareCards(card1, card2){
-        let playerOneCard = this.cardsInPlay[this.cardsInPlay.length-2].value;
-        let playerTwoCard = this.cardsInPlay[this.cardsInPlay.length-1].value;
-        if (playerOneCard === playerTwoCard){
-            this.flipTopCards();
-            console.log("It's a tie!")
-            this.war();
-        } else if (playerOneCard > playerTwoCard){
-            this.flipTopCards();
-            this.players[0].cardsInHand = [...this.cardsInPlay,...this.players[0].cardsInHand]
-            this.cardsInPlay = [];
-            console.log(`***** ${this.players[0].name} wins the round! *****`)
-        } else {
-            this.flipTopCards();
-            this.players[1].cardsInHand = [...this.cardsInPlay,...this.players[1].cardsInHand]
-            this.cardsInPlay = []; 
-            console.log(`***** ${this.players[1].name} wins the round! *****`)
+        let round = 1;
+        while(this.checkForWinner()){
+            this.startRound(round);
+            console.log(`***** At the end of round ${round}, ${this.players[0].name} has ${this.players[0].cardsInHand.length} cards and ${this.players[1].name} has ${this.players[1].cardsInHand.length} cards *****`)
+            round++;
         }
+        if (this.players[0].cardsInHand.length === 0){
+            console.log(`***** Game over. ${this.players[0].name} is out of cards. ${this.players[1].name} won! *****`);
+        } else if (this.players[1].length === 0){
+            console.log(`***** Game over. ${this.players[1].name} is out of cards. ${this.players[0].name} won! *****`);
+        }
+    }
+    startRound(counter){
+        console.log(`***** Round ${counter} ******`)
+        if (this.playCards()){
+            console.log('***** Players draw a card *****')
+            this.compareCards();
+            return true;
+        } return false;
+    }
+    compareCards(playerOneCard, playerTwoCard){
+        if (this.cardsInPlay.length >= 2){
+            playerOneCard = this.cardsInPlay[this.cardsInPlay.length-2].value;
+            playerTwoCard = this.cardsInPlay[this.cardsInPlay.length-1].value;
+            if (playerOneCard === playerTwoCard){
+                this.flipTopCards();
+                console.log("It's a tie!")
+                this.war();
+            } else if (playerOneCard > playerTwoCard){
+                this.flipTopCards();
+                this.cardsInPlay.sort((a, b) => 0.5 - Math.random())
+                this.players[0].cardsInHand = [...this.cardsInPlay,...this.players[0].cardsInHand]
+                this.cardsInPlay = [];
+                console.log(`***** ${this.players[0].name} wins the round! *****`)
+            } else if(playerOneCard < playerTwoCard){
+                this.flipTopCards();
+                this.cardsInPlay.sort((a, b) => 0.5 - Math.random())
+                this.players[1].cardsInHand = [...this.cardsInPlay,...this.players[1].cardsInHand]
+                this.cardsInPlay = []; 
+                console.log(`***** ${this.players[1].name} wins the round! *****`)
+            }
+         } else return
     }
     flipTopCards(){
         let cip = this.cardsInPlay;
@@ -91,30 +113,41 @@ class Board{
         console.log(`${this.players[1].name} flipped up a ${cip[cip.length-1].rank} of ${cip[cip.length-1].suit}`)
     }
     playCards(){
-        let playerOneCard = this.players[0].placeCard();
-        let playerTwoCard = this.players[1].placeCard();
-        this.cardsInPlay.push(playerOneCard);
-        this.cardsInPlay.push(playerTwoCard);
+        if (this.checkForWinner()){
+            let playerOneCard = this.players[0].placeCard();
+            let playerTwoCard = this.players[1].placeCard();
+            this.cardsInPlay.push(playerOneCard);
+            this.cardsInPlay.push(playerTwoCard);
+            return true;
+        } else return false;
     }
     war(){
-        this.playCards();
-        console.log('"I..."');
-        this.playCards();
-        console.log('"De-..."');
-        this.playCards();
-        console.log('"-clare..."');
-        this.playCards();
-        console.log('"War!!!"');
-        this.compareCards();  
+        if (this.playCards()){
+            console.log('"I..."');
+            if(this.playCards()){
+                console.log('"De-..."');
+                if (this.playCards()){
+                    console.log('"-clare..."');
+                    if (this.playCards()){
+                        console.log('"War!!!"');
+                        this.compareCards(); 
+                    } else {
+                        return;
+                    }
+                } else {
+                    return;
+                }
+            } else{
+                return;
+            }
+        } else return;
     }
     checkForWinner(){
-        if (this.players[0].cardsInHand.length === 0){
-            console.log(`***** Game over. ${this.players[0]} is out of cards. ${this.player[1]} won! *****`)
-        } else if (this.players[1].length === 0){
-            console.log(`***** Game over. ${this.players[1]} is out of cards. ${this.player[0]} won! *****`)
-        }
+        if ((this.players[0].cardsInHand.length === 0 || this.players[1].cardsInHand.length === 0) && this.cardsInPlay.length === 0){
+            return false;
+        } else return true;
     }
 }
 let board = new Board;
-board.init();
-board.startRound();
+// board.init();
+// if player x does not have a card to playl player y needs to pick them up. something in war.
