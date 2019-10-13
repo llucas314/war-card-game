@@ -21,7 +21,7 @@ The purpose of this repository was to build the classic card game "War" in javas
 
 3. Open developer tools by selecting "More Tools" then "Developer Tools" in the Chrome menu in the browser.
 
-![developer-tools](./images/devoloper_tools.png)
+![developer-tools](./images/developer_tools.png)
 
   * Alternatively, you can use the keyboard shortcuts <kbd>command</kbd> + <kbd>option</kbd>  + <kbd>i</kbd> 
   
