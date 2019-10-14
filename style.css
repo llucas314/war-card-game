@@ -1,0 +1,13 @@
+body {
+    background: url(./images/war.jpg) no-repeat center center fixed; 
+    background-size: cover;
+    display: flex;
+    justify-content: flex-start;;
+    align-items: center;
+}
+h1 {
+    font-family: 'Montserrat Subrayada', sans-serif;
+    font-size: 15vmin;
+    text-align: center;
+    color: #2F2B24;
+}
