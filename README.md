@@ -4,9 +4,9 @@ The purpose of this repository was to build the classic card game "War" in javas
 
 ## Screenshots
 
-![console-output-game-start](.lib/images/war_start.png)
+![console-output-game-start](./lib/images/war_start.png)
 
-![console-output-game-end](.lib/images/war_end.png)
+![console-output-game-end](./lib/images/war_end.png)
 
 ## Built With
 
@@ -21,7 +21,7 @@ The purpose of this repository was to build the classic card game "War" in javas
 
 3. Open developer tools by selecting "More Tools" then "Developer Tools" in the Chrome menu in the browser.
 
-![developer-tools](.lib/images/developer_tools.png)
+![developer-tools](./lib/images/developer_tools.png)
 
   * Alternatively, you can use the keyboard shortcuts <kbd>command</kbd> + <kbd>option</kbd>  + <kbd>i</kbd> 
   
